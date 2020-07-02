@@ -50,24 +50,31 @@ class Node:
                 while True:
                     # 是返回rgbd or intrinsic
                     if rec_data == "rgbd" and self.flag1 and self.flag2:
-                        print(rec_data)
+                        print('trans '+rec_data)
                         self.flag1=False
                         self.flag2=False
                         arrBuf = bytearray(b'\xff\xaa\xff\xaa')
-                        rgbBytes = self.rgb_image
-                        print(rgbBytes)
-                        depthBytes = self.depth_image
+                        rgbBytes = self.rgb_image.tobytes()
+                        
+                        depthBytes = self.depth_image.tobytes()
                         # 图片大小
-                        rgbSize = len(rgbBytes)
-                        depthSize = len(depthBytes)
+                        rgbSize = len(rgbBytes)#rgb one pixel 1 byte char
+                        depthSize = len(depthBytes)#depth one pixel 4 bytes double
                         # 数据体长度 = guid大小(固定) + 图片大小
                         rgbdatalen = rgbSize
                         depthdatalen = depthSize
                         # 组合数据包
-                        arrBuf += struct.pack('i',rgbdatalen)
-                        arrBuf += rgbBytes
-                        arrBuf += struct.pack('i',depthdatalen)
-                        arrBuf += depthBytes
+                        arrBuf += struct.pack('<i',rgbdatalen)
+                        arrBuf += struct.pack('<i',depthdatalen)
+                        c.sendall(arrBuf)
+                        #print(rgbdatalen)
+                        #arrBuf += struct.pack('<%di'%rgbdatalen,* rgbBytes)
+                        arrBuf=rgbBytes
+                        #print(len(arrBuf))
+                        print(depthdatalen)
+                        #arrBuf += struct.pack('<%di'%depthdatalen,* depthBytes)
+                        arrBuf+=depthBytes
+                        print(len(arrBuf))
                         c.sendall(arrBuf)
                     # 用来返回口腔坐标信息， 只需要发送图像的可忽略
                     elif rec_data == "intrinsic" and self.intrinsic!=None:
@@ -84,7 +91,7 @@ class Node:
                         rec_data = "rgbd"
                 c.close()
             except Exception as e:
-                print("远程主机强制关闭连接")
+                print("exception:")
                 print(e.args)
                 s.close()
                 return
@@ -92,13 +99,15 @@ class Node:
 
     def rgbcallback(self,data):
         bridge = CvBridge()
-        self.rgb_image = bridge.imgmsg_to_cv2(data,'passthrough')
+        self.rgb_image = bridge.imgmsg_to_cv2(data,'passthrough')#convert data to numpy
         #cv2.imshow("rgb",rgb_image)
         self.flag1=True
         
     def depthcallback(self,data):    
         bridge = CvBridge()
         self.depth_image = bridge.imgmsg_to_cv2(data,'passthrough')
+        #print(data.encoding)  32FC1
+        #print(data.is_bigendian)  小端传输
         #cv2.imshow("depth",depth_image)
         self.flag2=True
     def intrinsic_callback_once(self,data):

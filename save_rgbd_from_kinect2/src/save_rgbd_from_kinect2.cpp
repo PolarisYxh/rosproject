@@ -94,15 +94,15 @@ int main(int argc,char** argv)
 				//  time_stamp =time_val.tv_sec+ time_val.tv_usec/1000000.0;
                 // ostringstream os_rgb;
                  //os_rgb<<time_val.tv_sec<<"."<<time_val.tv_usec;
-                 double k=0.000001*num1;
+                double k=0.000001*num1;
                  //rgb_str = save_imagedata+"rgb/"+os_rgb.str()+".png";
-                 rgb_str = save_imagedata+"rgb/"+std::to_string(k)+".png";
-                  dep_str =save_imagedata+"depth/"+std::to_string(k)+".png";// 输出图像目录
-                  imwrite(rgb_str,rgb);
-                 imwrite(dep_str,depth);
+                rgb_str = save_imagedata+"rgb/"+std::to_string(k)+".png";
+                dep_str =save_imagedata+"depth/"+std::to_string(k)+".png";// 输出图像目录
+                imwrite(rgb_str,rgb);
+                imwrite(dep_str,depth);
                   //fout_rgb<<os_rgb.str()<<",rgb/"<<os_rgb.str()<<".png\n";
-                  successed_flag1=0;
-                  successed_flag2=0;
+                successed_flag1=0;
+                successed_flag2=0;
 				  //imshow("image color",rgb);
 				  
                // gettimeofday(&time_val,&tz);//us
@@ -118,9 +118,9 @@ int main(int argc,char** argv)
                 //fout_depth<<os_dep.str()<<",depth/"<<os_dep.str()<<"_8.png\n";
 				
 				//   imshow("image depth",depth);
-                 cout<<"rgb -- time:  " <<  time_val.tv_sec<<"."<<time_val.tv_usec<<endl;
-				  cout<<"depth -- time:" <<  time_val.tv_sec<<"."<<time_val.tv_usec<<endl;
-                  num1++;
+                cout<<"rgb -- time:  " <<  time_val.tv_sec<<"."<<time_val.tv_usec<<endl;
+				cout<<"depth -- time:" <<  time_val.tv_sec<<"."<<time_val.tv_usec<<endl;
+                num1++;
              }	
     }
 
@@ -163,7 +163,7 @@ void  callback_function_depth(const sensor_msgs::Image::ConstPtr  image_data)
                 temp.ptr<float>(i)[j]=0;
         }
     }
-	temp.convertTo(depth, CV_16UC1, 1000);
+	temp.convertTo(depth, CV_16UC1, 1000);//src.convertTo(dst, type, scale, shift)
     //minMaxIdx(depth,&minv,&maxv);
 	//depth.convertTo(depth1, CV_8UC1, 255.0/(maxv*1000.0));
 	//imshow("a", depth);
