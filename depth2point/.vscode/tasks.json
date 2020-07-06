@@ -10,7 +10,7 @@
             "args": [
             ],
             "options": {
-                "cwd": "${fileDirname}/build"
+                "cwd": "${workspaceFolder}/build"
             },
             "problemMatcher": [
             ],

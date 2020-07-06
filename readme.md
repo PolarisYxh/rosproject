@@ -13,8 +13,13 @@ rosrun rosrun save_rgbd_from_kinect2 save_rgbd_from_kinect2//保存rgbd图
 ## document
 iqr_4b_robot-master/iqr_4b_description/urdf/iqr_4b_robot.urdf.xacro   //整体智科特组装机器人的文件
 
-##通过socket传输从ros节点获取的rgbd图片
+## 自己写的python通过socket传输从ros节点获取的rgbd图片  
 save_rgbd_from_kinect2里面的 trans_rgbd_from_kinect.py是服务器，获取ros rgbd传输到客户端
 rosrun save_rgbd_from_kinect2 trans_rgbd_from_kinect.py
 save_rgbd_from_kinect2里面的get_rgbd.py是客户端，获取rgbd并保存
+
+## ros+unity
+roslaunch iqr_4b_bringup zhikete_mars.launch//打开智科特机器人和mars_plane的gazebo
+rosrun iqr_4b_bringup joy_to_twist.py  //打开unity控制机器人的节点
+~/ros_unity_pro/Assets/RosSharp/Scenes/ZhiketeScene.unity    //打开对应的unity场景，在unity场景运行以后，可以方向键控制机器人运动
 
