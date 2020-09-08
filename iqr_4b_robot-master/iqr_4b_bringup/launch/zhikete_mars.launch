@@ -30,15 +30,16 @@
   <include file="$(find jackal_control)/launch/teleop.launch">
     <arg name="joystick" value="true"/>
   </include>
-<!-- create web socket api -->
+<!-- create web socket api >
   <node name="file_server" pkg="file_server" type="file_server" output="screen" />
   <param name="robot/name" value="zhike" />
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" > 
      <arg name="port" value="9090"/>
 	<arg name="address" value="127.0.0.1"/>
-  </include>
+  </include-->
   <node name="joy_to_twist" pkg="gazebo_simulation_scene" type="joy_to_twist.py" output="screen"/>
-
+  <!--node pkg="rosbag" type="record" name="bag_record" args="/stereocamera/left/image_raw/compressed /stereocamera/right/camera_info /stereocamera/right/image_raw/compressed /camera/depth/camera_info /camera/depth/image_raw /camera/rgb/camera_info /camera/rgb/image_raw/compressed /gazebo/model_states /stereocamera/left/image_raw/compressed /stereocamera/right/camera_info /stereocamera/right/image_raw/compressed /laser/scan /imu/data"/-->
+  <node pkg="rosbag" type="record" name="bag_record" args=" /gazebo/model_states  /stereocamera/left/image_raw/compressed /stereocamera/right/camera_info /stereocamera/right/image_raw/compressed /imu/data"/>  
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
   <!-- Spawn Jackal -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"

@@ -15,11 +15,11 @@
         </inertia>
       </inertial>
     <collision name='head'>
-          <pose>0 0 -0.2 0 0 0</pose>
+          <pose>0 0 -0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://mars/meshes/48.dae</uri>
-              <scale>2 2 2</scale>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -41,11 +41,11 @@
         </collision>
 
         <visual name='head'>
-          <pose>0 0 -0.2 0 0 0</pose>
+          <pose>0 0 -0 0 0 0</pose>
           <geometry>
             <mesh>
               <uri>model://mars/meshes/48.dae</uri>
-              <scale>2 2 2</scale>
+              <scale>1 1 1</scale>
             </mesh>
           </geometry>
           <!--material>
@@ -56,6 +56,6 @@
           </material-->
         </visual>
        </link>
-      
+
    </model>
 </sdf>

@@ -1,6 +1,0 @@
-<launch> 
- <!--node pkg="image_view" type="image_saver" name="image_saver">
-   <param name="image" value="/camera/rgb/image_raw" />
-  </node-->
-  <node  pkg="image_view" name="image_saver" type="image_saver" args="image:=/camera/rgb/image_raw" />
-</launch>

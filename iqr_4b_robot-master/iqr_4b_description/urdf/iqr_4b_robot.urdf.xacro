@@ -31,7 +31,7 @@
 
   <!-- IQR pan-tilt -->
   <xacro:pan_tilt parent="jackal_support_link">
-    <origin xyz="-0.0801 0 0.628" rpy="0 0 0" />
+    <origin xyz="-0.0801 0 1.128" rpy="0 0 0" />
   </xacro:pan_tilt>
 
   <!-- Kinect v2 -->
@@ -43,8 +43,8 @@
 	    <alwaysOn>true</alwaysOn>
 	    <updateRate>50.0</updateRate>
 	    <bodyName>base_link</bodyName>
-	    <topicName>ground_truth/state</topicName>
-	    <gaussianNoise>0.01</gaussianNoise>
+	    <topicName>ground_truth/robot_state</topicName>
+	    <gaussianNoise>0.00</gaussianNoise>
 	    <frameName>world</frameName>
 	    <xyzOffsets>0 0 0</xyzOffsets>
 	    <rpyOffsets>0 0 0</rpyOffsets>
