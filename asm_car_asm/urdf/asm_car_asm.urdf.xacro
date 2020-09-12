@@ -30,8 +30,8 @@
 </gazebo>
 <gazebo reference="BackLeftWheel1">
 			<selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -39,8 +39,8 @@
 </gazebo>
 <gazebo reference="BackLeftWheel2">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -48,8 +48,8 @@
 </gazebo>
 <gazebo reference="FrontLeftWheel1">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -57,8 +57,8 @@
 </gazebo>
 <gazebo reference="FrontLeftWheel2">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -66,8 +66,8 @@
 </gazebo>
 <gazebo reference="BackRightWheel1">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -75,8 +75,8 @@
 </gazebo>
 <gazebo reference="BackRightWheel2">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -84,8 +84,8 @@
 </gazebo>
 <gazebo reference="FrontRightWheel1">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>
@@ -93,8 +93,8 @@
 </gazebo>
 <gazebo reference="FrontRightWheel2">
 <selfCollide>true</selfCollide>
-			<mu1 value="1.0"/>
-			<mu2 value="1.0"/>
+			<mu1 value="0.5"/>
+			<mu2 value="2"/>
 			<kp value="10000000.0" />
 			<kd value="1.0" />
 			<fdir1 value="1 0 0"/>

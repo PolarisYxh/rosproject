@@ -24,3 +24,5 @@ roslaunch iqr_4b_bringup zhikete_mars.launch//打开智科特机器人和mars_pl
 rosrun iqr_4b_bringup joy_to_twist.py  //打开unity控制机器人的节点
 ros_unity_pro/Assets/RosSharp/Scenes/ZhiketeScene.unity    //打开对应的火星 unity场景，在unity场景运行以后，可以方向键控制机器人运动
 ros_unity_pro/Assets/RosSharp/Scenes/3D SCENE/AVP_Interior_Vol.2.unity     //打开房间场景
+## 502
+roslaunch iqr_4b_bringup zhikete_mars.launch  //打开502仿真环境
