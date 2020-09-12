@@ -1,4 +1,4 @@
-#Jackal's kinect package
+# Jackal's kinect package
 before roslaunch iqr_4b_bringup iqr_bringup.launch,have to open all the devices such as kinova
 roslaunch iqr_4b_moveit_config iqr_4b_moveit_execute.launch//manipulate kinova arm
 roslaunch iqr_4b_navigation gmapping_demo.launch//open navigation algorithm
@@ -24,5 +24,8 @@ roslaunch iqr_4b_bringup zhikete_mars.launch//打开智科特机器人和mars_pl
 rosrun iqr_4b_bringup joy_to_twist.py  //打开unity控制机器人的节点
 ros_unity_pro/Assets/RosSharp/Scenes/ZhiketeScene.unity    //打开对应的火星 unity场景，在unity场景运行以后，可以方向键控制机器人运动
 ros_unity_pro/Assets/RosSharp/Scenes/3D SCENE/AVP_Interior_Vol.2.unity     //打开房间场景
+
 ## 502
-roslaunch iqr_4b_bringup zhikete_mars.launch  //打开502仿真环境
+roslaunch iqr_4b_bringup zhikete_mars.launch  //打开月面仿真环境+zhikete机器车(该车目前含有./interface.pdf中所述各个传感器的接口)
+roslaunch iqr_4b_bringup 502_mars.launch    //打开月面仿真环境+502机器车(该车目前含有kinect,laser传感器，后续可以添加)
+roslaunch 502_teleop turtlebot3_teleop.launch //打开键盘控制机器车运动程序，wasd控制运动
