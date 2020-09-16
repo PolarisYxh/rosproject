@@ -28,4 +28,14 @@ ros_unity_pro/Assets/RosSharp/Scenes/3D SCENE/AVP_Interior_Vol.2.unity     //打
 ## 502
 roslaunch iqr_4b_bringup zhikete_mars.launch  //打开月面仿真环境+zhikete机器车(该车目前含有./interface.pdf中所述各个传感器的接口)
 roslaunch iqr_4b_bringup 502_mars.launch    //打开月面仿真环境+502机器车(该车目前含有kinect,laser传感器，后续可以添加)
-roslaunch 502_teleop turtlebot3_teleop.launch //打开键盘控制机器车运动程序，wasd控制运动
+roslaunch a502_teleop turtlebot3_teleop.launch //打开键盘控制机器车运动程序，wasd控制运动
+
+## 文件说明
+a502_teleop里面是键盘控制机器车运动的脚本
+asm_car_asm里面是502研究所8轮车的模型描述
+iqr_4b_robot-master/iqr_4b_bringup里面是各个仿真环境的launch文件，是仿真环境入口，还有zhikete小车模型，月面及其他世界模型。
+iqr_4b_robot-master/iqr_4b_moveit_config里面是机械臂相关launch文件，目前没用
+iqr_4b_robot-master/iqr_4b_navigation里面是导航相关launch文件，运行导航包入口
+iqr_pan_tilt-master里面是控制kinect相机云台的控制程序
+kinova-ros-master里面是运行控制机械臂的包，目前没用
+save_rgbd_from_kinect2里面是自己写的保存一些传感器信息的程序

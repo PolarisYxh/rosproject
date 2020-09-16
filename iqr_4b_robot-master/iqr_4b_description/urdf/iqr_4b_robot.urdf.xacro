@@ -31,7 +31,7 @@
 
   <!-- IQR pan-tilt -->
   <xacro:pan_tilt parent="jackal_support_link">
-    <origin xyz="-0.0801 0 1.128" rpy="0 0 0" />
+    <origin xyz="-0.0801 0 0.625" rpy="0 0 0" />
   </xacro:pan_tilt>
 
   <!-- Kinect v2 -->
