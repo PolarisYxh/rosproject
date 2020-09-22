@@ -163,7 +163,64 @@
     <axis
       xyz="0 0 0" />
   </joint>
-
+  <link
+    name="arm_base_link">
+    <inertial>
+      <origin
+        xyz="-5.55111512312578E-17 0.101176973562987 -2.46321547148081E-17"
+        rpy="0 0 0" />
+      <mass
+        value="0.745925360702044" />
+      <inertia
+        ixx="0.00644788228655189"
+        ixy="-2.00161742688882E-18"
+        ixz="2.38422264352436E-30"
+        iyy="0.00345230985013849"
+        iyz="7.44332857983967E-19"
+        izz="0.00644788228655189" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asm_car_asm/meshes/arm_base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.584313725490196 0.584313725490196 0.584313725490196 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://asm_car_asm/meshes/arm_base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="ArmJoint"
+    type="fixed">
+    <origin
+      xyz="-0.388 0 0"
+      rpy="1.5708 0 0" />
+    <parent
+      link="body" />
+    <child
+      link="arm_base_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <joint name="ur5_joint" type="fixed">
+    <parent link="arm_base_link" />
+    <child link = "ur5_base_link" />
+    <origin xyz="0.0 0.2 0.0" rpy="-1.5708 0.0 0.0" />
+  </joint>
   <link
     name="laser_link">
     <inertial>
@@ -206,7 +263,7 @@
     name="laser_joint"
     type="fixed">
     <origin
-      xyz="0 -0.12 0.693"
+      xyz="0 0 0.653"
       rpy="0 0 -1.5708" />
     <parent
       link="rack_link" />
@@ -260,7 +317,7 @@
     name="kinect_joint"
     type="continuous">
     <origin
-      xyz="0 -0.12 0.653"
+      xyz="0 0 0.603"
       rpy="0 0.7 -1.5708" />
     <parent
       link="rack_link" />
