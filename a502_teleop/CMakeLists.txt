@@ -4,14 +4,15 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(a502_teleop)
 
-################################################################################
-# Find catkin packages and libraries for catkin and system dependencies
-################################################################################
-find_package(catkin REQUIRED COMPONENTS
-  rospy
-  geometry_msgs
+find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs joy)
+include_directories(${catkin_INCLUDE_DIRS})
+catkin_package(
+  INCLUDE_DIRS
+  CATKIN_DEPENDS roscpp geometry_msgs joy rospy
+  DEPENDS
 )
-
+add_executable(turtlebot_teleop_joy src/turtlebot_joy.cpp)
+target_link_libraries(turtlebot_teleop_joy ${catkin_LIBRARIES})
 ################################################################################
 # Setup for python modules and scripts
 ################################################################################
@@ -28,9 +29,9 @@ catkin_python_setup()
 ################################################################################
 # Declare catkin specific configuration to be passed to dependent projects
 ################################################################################
-catkin_package(
-  CATKIN_DEPENDS rospy geometry_msgs
-)
+#catkin_package(
+# CATKIN_DEPENDS rospy geometry_msgs
+#)
 
 ################################################################################
 # Build
@@ -43,7 +44,9 @@ catkin_install_python(PROGRAMS
   nodes/turtlebot3_teleop_key
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
-
+install(TARGETS turtlebot_teleop_joy
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )

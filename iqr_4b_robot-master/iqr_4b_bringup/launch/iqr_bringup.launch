@@ -34,5 +34,6 @@
     <param name="yaw_joint_name" value="pan_tilt_yaw_joint"/>
     <param name="pitch_joint_name" value="pan_tilt_pitch_joint"/>
   </node>
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf"  args="-urdf -model zhike -x 0 -y 0 -z 0 -param robot_description" />
 
 </launch>

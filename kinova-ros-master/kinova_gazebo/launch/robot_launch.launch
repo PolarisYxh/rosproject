@@ -1,6 +1,6 @@
 <launch>
 
-  <!-- these are the arguments you can pass this launch file, for example paused:=true -->  
+  <!-- these are the arguments you can pass this launch file, for example paused:=true -->
   <arg name="kinova_robotType" default="j2n6s300"/>
   <arg name="kinova_robotName" default="$(arg kinova_robotType)"/>
   <arg name="paused" default="true"/>
@@ -62,9 +62,16 @@
   </include>
 
   <!-- rqt launch file -->
-   
+
   <include file="$(find kinova_control)/launch/kinova_rqt.launch">
     <arg name="kinova_robotType" value="$(arg kinova_robotName)"/>
+  </include>
+<!-- create web socket api -->
+  <node name="file_server" pkg="file_server" type="file_server" output="screen" />
+  <param name="robot/name" value="502" />
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
+     <arg name="port" value="5901"/>
+	<arg name="address" value="127.0.0.1"/>
   </include>
 </launch>
 
