@@ -96,7 +96,6 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-	<gazebo>
 	  <plugin name="p3d_ball_controller" filename="libgazebo_ros_p3d.so">
 	    <alwaysOn>true</alwaysOn>
 	    <updateRate>50.0</updateRate>
@@ -107,7 +106,6 @@
 	    <xyzOffsets>0 0 0</xyzOffsets>
 	    <rpyOffsets>0 0 0</rpyOffsets>
 	  </plugin>
-	</gazebo>
     </model>
 <model name="FURNITURE_FURNITURE_0_BED_0_Pillows_01_0">
 <static>1</static>
