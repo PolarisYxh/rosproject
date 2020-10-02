@@ -32,12 +32,21 @@ roslaunch iqr_4b_bringup 502_mars.launch    //打开月面仿真环境+502机器
 roslaunch a502_teleop turtlebot3_teleop.launch //打开键盘控制机器车运动程序，wasd控制运动
 roslaunch a502_teleop ps3_teleop.launch //打开手柄，控制机器车运动程序，4、5轴控制运动，sudo jstest /dev/input/js0测试手柄接口，
 ```
-sudo apt-get install ros-indigo-joy
-sudo apt-get install ros-indigo-joystick-drivers
+sudo apt-get install ros-melodic-joy
+sudo apt-get install ros-melodic-joystick-drivers
 ```
 ## 机械臂
 roslaunch kinova_gazebo robot_launch.launch kinova_robotType:=j2n6s300 use_trajectory_controller:=false //打开gazebo的kinova，可以用rqt控制角度
 rosrun kinova_control move_robot.py j2n6s300 //use_trajectory_controller:=true时，此命令控制机械臂复位
+roslaunch j2n6s300_moveit_config j2n6s300_gazebo_demo.launch  //use_trajectory_controller:=true时,开启rviz控制机械臂运动
+rosrun kinova_arm_moveit_demo pick_place  //rviz中控制gazebo运动
+rviz:roslaunch   j2n6s300_moveit_config   j2n6s300_virtual_robot_demo.launch  //控制kinova rviz中机械臂运动，不控制gazebo
+
+rosdep 问题：sudo gedit /etc/hosts  #在文件末尾添加  151.101.84.133  raw.githubusercontent.com
+sudo apt-get install ros-kinetic-moveit*
+sudo apt-get install ros-kinetic-trac-ikmoveit
+
+
 ## 文件说明
 a502_teleop里面是键盘控制机器车运动的脚本
 asm_car_asm里面是502研究所8轮车的模型描述

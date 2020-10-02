@@ -715,58 +715,6 @@ bool PickPlace::my_pick()
     gripper_group_->move();
 
     ///////////////////////////////////////////////////////////
-    //// joint space without obstacle
-    ///////////////////////////////////////////////////////////
-
-    ROS_INFO_STREAM("Joint space motion planing without obstacle");
-    ROS_INFO_STREAM("Demonstrates moving robot from one joint position to another");
-    ROS_INFO_STREAM("Planning to go to start pose ...");
-    group_->setJointValueTarget(start_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Planning to go to pre-grasp joint pose ...");
-    group_->setJointValueTarget(pregrasp_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Approaching grasp position ...");
-    group_->setJointValueTarget(grasp_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Grasping ...");
-    gripper_action(0.75*FINGER_MAX); // partially close
-
-    ROS_INFO_STREAM("Planning to go to retract position ...");
-    group_->setJointValueTarget(postgrasp_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Planning to go to start position ...");
-    group_->setJointValueTarget(start_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Releasing ...");
-    gripper_action(0.0); // full open
-
-
-    ///////////////////////////////////////////////////////////
-    //// joint space with obstacle
-    ///////////////////////////////////////////////////////////
-    ROS_INFO_STREAM("*************************");
-    ROS_INFO_STREAM("*************************");
-    ROS_INFO_STREAM("*************************");
-    ROS_INFO_STREAM("Press any key to start motion plan in joint space with obstacle ...");
-    std::cin >> pause_;
-    add_obstacle();
-    group_->setJointValueTarget(pregrasp_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Planning to come back to start position ...");
-    group_->setJointValueTarget(start_joint_);
-    evaluate_plan(*group_);
-
-    ROS_INFO_STREAM("Releasing gripper ...");
-    gripper_action(0.0); // full open
-
-    ///////////////////////////////////////////////////////////
     //// Cartesian space without obstacle
     ///////////////////////////////////////////////////////////
     ROS_INFO_STREAM("*************************");
