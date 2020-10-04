@@ -27,7 +27,7 @@
 #include <moveit_msgs/DisplayRobotState.h>
 #include <moveit_msgs/ApplyPlanningScene.h>
 #include <moveit_msgs/DisplayTrajectory.h>
-
+#include <omni.h>
 namespace kinova
 {
 
@@ -35,9 +35,9 @@ namespace kinova
     class PickPlace
     {
     public:
-        PickPlace(ros::NodeHandle &nh);
+        PickPlace(ros::NodeHandle &nh,OmniState *s);
         ~PickPlace();
-
+        bool my_pick();
 
 
     private:
@@ -114,7 +114,7 @@ namespace kinova
         void setup_constrain(geometry_msgs::Pose target_pose, bool orientation, bool position);
         void check_constrain();
 
-        bool my_pick();
+
         bool my_place();
 
         void get_current_state(const sensor_msgs::JointStateConstPtr &msg);

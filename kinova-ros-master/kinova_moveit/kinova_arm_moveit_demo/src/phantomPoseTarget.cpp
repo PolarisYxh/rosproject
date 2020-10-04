@@ -1,8 +1,8 @@
-#include <pick_place.h>
+#include <phantomPoseTarget.h>
 #include <ros/console.h>
 
 #include <tf_conversions/tf_eigen.h>
-#include <omni.h>
+
 
 const double FINGER_MAX = 6400;
 
@@ -711,7 +711,7 @@ bool PickPlace::my_pick()
     start_pose_.pose.position.y = -0.5;
     start_pose_.pose.position.z = 0.5;
 
-    q = EulerZYZ_to_Quaternion(-M_PI/4, M_PI/2, M_PI);
+    tf::Quaternion q = EulerZYZ_to_Quaternion(-M_PI/4, M_PI/2, M_PI);
     start_pose_.pose.orientation.x = q.x();
     start_pose_.pose.orientation.y = q.y();
     start_pose_.pose.orientation.z = q.z();
