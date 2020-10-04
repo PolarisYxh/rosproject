@@ -36,10 +36,10 @@ sudo apt-get install ros-melodic-joy
 sudo apt-get install ros-melodic-joystick-drivers
 ```
 ## 机械臂
-roslaunch kinova_gazebo robot_launch.launch kinova_robotType:=j2n6s300 use_trajectory_controller:=false //打开gazebo的kinova，可以用rqt控制角度
+1、roslaunch kinova_gazebo robot_launch.launch kinova_robotType:=j2n6s300 use_trajectory_controller:=true //打开gazebo的kinova，false可以用rqt控制角度
 rosrun kinova_control move_robot.py j2n6s300 //use_trajectory_controller:=true时，此命令控制机械臂复位
-roslaunch j2n6s300_moveit_config j2n6s300_gazebo_demo.launch  //use_trajectory_controller:=true时,开启rviz控制机械臂运动
-rosrun kinova_arm_moveit_demo pick_place  //rviz中控制gazebo运动
+2、roslaunch j2n6s300_moveit_config j2n6s300_gazebo_demo.launch  //use_trajectory_controller:=true时,开启rviz控制机械臂运动
+3、rosrun kinova_arm_moveit_demo pick_place  //rviz中控制gazebo运动
 rviz:roslaunch   j2n6s300_moveit_config   j2n6s300_virtual_robot_demo.launch  //控制kinova rviz中机械臂运动，不控制gazebo
 
 rosdep 问题：sudo gedit /etc/hosts  #在文件末尾添加  151.101.84.133  raw.githubusercontent.com

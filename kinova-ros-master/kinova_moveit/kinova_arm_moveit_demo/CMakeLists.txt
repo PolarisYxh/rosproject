@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(kinova_arm_moveit_demo)
 
-add_compile_options(-std=c++11)
+#add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,21 +15,40 @@ find_package(catkin REQUIRED
              cmake_modules
              geometric_shapes
              eigen_conversions
+             roscpp
+             std_msgs
+             geometry_msgs
+             genmsg
+             rosconsole
+             tf
+             urdf
 )
-
 find_package(Boost REQUIRED system filesystem date_time thread)
+find_package(Eigen REQUIRED)
+
+find_package(kinova_driver REQUIRED)
+add_message_files(FILES PhantomButtonEvent.msg OmniFeedback.msg)
+generate_messages(DEPENDENCIES geometry_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS 
+  CATKIN_DEPENDS
     moveit_core
     moveit_ros_planning_interface
     interactive_markers
     eigen_conversions
+    roscpp
+    std_msgs
+    geometry_msgs
+    genmsg
+    rosconsole
+    tf
+    urdf
 )
-find_package(Eigen REQUIRED)
 
-find_package(kinova_driver REQUIRED)
+
+
+
 
 ###########
 ## Build ##
@@ -61,6 +80,9 @@ add_executable(test_accuracy src/test_accuracy.cpp include/test_accuracy.h)
 target_link_libraries(test_accuracy ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${kinova_driver_LIBRARIES})
 install(TARGETS test_accuracy DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(phantomPoseTarget src/phantomPoseTarget.cpp include/phantomPoseTarget.h include/omni.h)
+target_link_libraries(phantomPoseTarget HD HL HDU rt ncurses ${catkin_LIBRARIES} ${Boost_LIBRARIES} ${kinova_driver_LIBRARIES})
+install(TARGETS phantomPoseTarget DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 #get_cmake_property(_variableNames VARIABLES)
 #foreach (_variableName ${_variableNames})
