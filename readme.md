@@ -41,7 +41,7 @@ rosrun kinova_control move_robot.py j2n6s300 //use_trajectory_controller:=true�
 2、roslaunch j2n6s300_moveit_config j2n6s300_gazebo_demo.launch  //use_trajectory_controller:=true时,开启rviz控制机械臂运动
 3、rosrun kinova_arm_moveit_demo pick_place  //rviz中控制gazebo运动
 rviz:roslaunch   j2n6s300_moveit_config   j2n6s300_virtual_robot_demo.launch  //控制kinova rviz中机械臂运动，不控制gazebo
-
+4、roslaunch kinova_arm_moveit_demo phantomPoseTarget.launch
 rosdep 问题：sudo gedit /etc/hosts  #在文件末尾添加  151.101.84.133  raw.githubusercontent.com
 sudo apt-get install ros-kinetic-moveit*
 sudo apt-get install ros-kinetic-trac-ikmoveit

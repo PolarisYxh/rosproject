@@ -1,0 +1,5 @@
+<launch>
+  <node name="geomagic" pkg="kinova_arm_moveit_demo" type="phantomPoseTarget" output="screen">
+    <param name="device_name" type="str" value="geomagic"/>         
+  </node>
+</launch>

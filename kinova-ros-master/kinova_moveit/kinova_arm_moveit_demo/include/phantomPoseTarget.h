@@ -114,7 +114,7 @@ namespace kinova
         void setup_constrain(geometry_msgs::Pose target_pose, bool orientation, bool position);
         void check_constrain();
 
-
+        bool my_pick1();
         bool my_place();
 
         void get_current_state(const sensor_msgs::JointStateConstPtr &msg);
@@ -123,6 +123,7 @@ namespace kinova
         void getInvK(geometry_msgs::Pose &eef_pose, std::vector<double> &joint_value);
         void check_collision();
         void evaluate_plan(moveit::planning_interface::MoveGroupInterface &group);
+        void auto_evaluate_plan(moveit::planning_interface::MoveGroupInterface &group);
         bool gripper_action(double gripper_rad);
     };
 }

@@ -8,7 +8,6 @@ const double FINGER_MAX = 6400;
 
 using namespace kinova;
 
-
 tf::Quaternion EulerZYZ_to_Quaternion(double tz1, double ty, double tz2)
 {
     tf::Quaternion q;
@@ -34,8 +33,6 @@ PickPlace::PickPlace(ros::NodeHandle &nh,OmniState *s):
 //    {
 //        ros::console::notifyLoggerLevelsChanged();
 //    }
-
-    ros::NodeHandle pn("~");
 
     nh_.param<std::string>("/robot_type",robot_type_,"j2n6s300");
     nh_.param<bool>("/robot_connected",robot_connected_,true);
@@ -87,23 +84,7 @@ PickPlace::PickPlace(ros::NodeHandle &nh,OmniState *s):
 
     // pick process
     result_ = false;
-
-    build_workscene();
-    add_target();
-    add_complex_obstacle();
-    ros::WallDuration(1.0).sleep();
-    clear_workscene();
-    ros::WallDuration(1.0).sleep();
-    ROS_INFO_STREAM("Press any key to send robot to home position ...");
-    std::cin >> pause_;
-    group_->clearPathConstraints();
-    group_->setNamedTarget("Home");
-    evaluate_plan(*group_);
-
-    ros::WallDuration(1.0).sleep();
-    gripper_group_->setNamedTarget("Open");
-    gripper_group_->move();
-    //my_pick();
+    //my_pick1();
 }
 
 
@@ -684,7 +665,66 @@ void PickPlace::evaluate_plan(moveit::planning_interface::MoveGroupInterface &gr
 
             replan = false;
             std::cout << "please input e to execute the plan, r to replan, others to skip: ";
-            //std::cin >> pause_;
+            std::cin >> pause_;
+            ros::WallDuration(0.5).sleep();
+            if (pause_ == "r" || pause_ == "R" )
+            {
+                replan = true;
+            }
+            else
+            {
+                replan = false;
+            }
+        }
+        else // not found
+        {
+            std::cout << "Exit since plan failed until reach maximum attemp: " << count << std::endl;
+            replan = false;
+            break;
+        }
+    }
+
+    if(result_ == true)
+    {
+        if (pause_ == "e" || pause_ == "E")
+        {
+            group.execute(my_plan);
+        }
+    }
+    ros::WallDuration(1.0).sleep();
+}
+void PickPlace::auto_evaluate_plan(moveit::planning_interface::MoveGroupInterface &group)
+{
+    bool replan = true;
+    int count = 0;
+
+    moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+
+    while (replan == true && ros::ok())
+    {
+        // reset flag for replan
+        count = 0;
+        result_ = false;
+
+        // try to find a success plan.
+        double plan_time;
+        while (result_ == false && count < 5)
+        {
+            count++;
+            plan_time = 20+count*10;
+            ROS_INFO("Setting plan time to %f sec", plan_time);
+            group.setPlanningTime(plan_time);
+            result_ = (group.plan(my_plan) == moveit_msgs::MoveItErrorCodes::SUCCESS);
+            std::cout << "at attemp: " << count << std::endl;
+            ros::WallDuration(0.1).sleep();
+        }
+
+        // found a plan
+        if (result_ == true)
+        {
+            std::cout << "plan success at attemp: " << count << std::endl;
+            replan = false;
+            //ros::WallDuration(0.5).sleep();
         }
         else // not found
         {
@@ -698,54 +738,125 @@ void PickPlace::evaluate_plan(moveit::planning_interface::MoveGroupInterface &gr
     {
         group.execute(my_plan);
     }
-    ros::WallDuration(1.0).sleep();
+    //ros::WallDuration(1.0).sleep();
 }
-
-
 bool PickPlace::my_pick()
 {
-    // define start pose before grasp
-    start_pose_.header.frame_id = "root";
-    start_pose_.header.stamp = ros::Time::now();
-    start_pose_.pose.position.x = 0.5;
-    start_pose_.pose.position.y = -0.5;
-    start_pose_.pose.position.z = 0.5;
+    start_joint_.resize(joint_names_.size());
+    //    getInvK(start_pose_, start_joint_);
+    start_joint_[0] = state->thetas[1];
+    start_joint_[1] = state->thetas[2]+M_PI_2;
+    start_joint_[2] = -state->thetas[3]+M_PI+M_PI_2;
+    start_joint_[3] = state->thetas[4] + M_PI_2;
+    start_joint_[4] = -state->thetas[5] +M_PI/4;
+    start_joint_[5] = -(-state->thetas[6] - M_PI);
+    group_->setJointValueTarget(start_joint_);
+    auto_evaluate_plan(*group_);
 
-    tf::Quaternion q = EulerZYZ_to_Quaternion(-M_PI/4, M_PI/2, M_PI);
-    start_pose_.pose.orientation.x = q.x();
-    start_pose_.pose.orientation.y = q.y();
-    start_pose_.pose.orientation.z = q.z();
-    start_pose_.pose.orientation.w = q.w();
+    ROS_INFO("%f %f %f %f %f %f",start_joint_[0],start_joint_[1],start_joint_[2],start_joint_[3],start_joint_[4],start_joint_[5]);
 
     if (state->buttons[0] == 1)
 	{
-//		if ((state->buttons[0] == state->buttons[1])
-//			and (state->buttons[0] == 1)) {
-//			for(int i=0; i<3;i++)
-//				state->lock[i] = !(state->lock[i]);
-//		}
-        ros::WallDuration(0.1).sleep();
-        ROS_INFO_STREAM("Planning to go to pre-grasp position ...");
-        group_->setPoseTarget(start_pose_);
-        evaluate_plan(*group_);
         ros::WallDuration(1.0).sleep();
         gripper_action(0.75*FINGER_MAX);
         ROS_INFO_STREAM("OK ...");
 	}
     if(state->buttons[1] == 1)
     {
-
+        ROS_INFO_STREAM("press 2");
+        ros::WallDuration(1.0).sleep();
+        gripper_action(0.0);
+        ROS_INFO_STREAM("OK ...");
     }
     return true;
 }
+bool PickPlace::my_pick1()
+{
+    clear_workscene();
+    ros::WallDuration(1.0).sleep();
+    build_workscene();
+    ros::WallDuration(1.0).sleep();
 
+    ROS_INFO_STREAM("Press any key to send robot to home position ...");
+    std::cin >> pause_;
+    group_->clearPathConstraints();
+    group_->setNamedTarget("Home");
+    evaluate_plan(*group_);
 
+    ros::WallDuration(1.0).sleep();
+    gripper_group_->setNamedTarget("Open");
+    gripper_group_->move();
+    
+    clear_workscene();
+    ROS_INFO_STREAM("Press any key to quit ...");
+    std::cin >> pause_;
+    return true;
+}
 void PickPlace::getInvK(geometry_msgs::Pose &eef_pose, std::vector<double> &joint_value)
 {
     // TODO: transform cartesian command to joint space, and alway motion plan in joint space.
 }
 
+// void* control_kinova(void *ptr)
+// {
+//     OmniState* state=(OmniState*)ptr;
+//     ros::NodeHandle node1;
+//     ros::Rate loop_rate(20);
+//     ros::AsyncSpinner spinner(1);
+//     spinner.start();
+//     kinova::PickPlace pick_place(node1,state);
+//     while (ros::ok()) {
+// 		pick_place.my_pick();
+//         loop_rate.sleep();
+// 	}
+//     return NULL;
+// }
+// void* get_geomagic_state(void* name)
+// {
+// 	////////////////////////////////////////////////////////////////
+// 	// Init Phantom
+// 	////////////////////////////////////////////////////////////////
+//     OmniState state;
+// 	HDErrorInfo error;
+// 	HHD hHD;
+//     char * device_name =(char *)name;
+// 	hHD = hdInitDevice(device_name);//use ros param and set in launch file
+// 	if (HD_DEVICE_ERROR(error = hdGetError())) {
+// 		//hduPrintError(stderr, &error, "Failed to initialize haptic device");
+// 		ROS_ERROR("Failed to initialize haptic device"); //: %s", &error);
+// 		return NULL;
+// 	}
 
+// 	ROS_INFO("Found %s.", hdGetString(HD_DEVICE_MODEL_TYPE));
+// 	hdEnable(HD_FORCE_OUTPUT);
+// 	hdStartScheduler();
+// 	if (HD_DEVICE_ERROR(error = hdGetError())) {
+// 		ROS_ERROR("Failed to start the scheduler"); //, &error);
+// 		return NULL;
+// 	}
+// 	HHD_Auto_Calibration();
+
+// //	HHLRC  hHLRC = hlCreateContext(hHD);
+// //	hlMakeCurrent(hHLRC);
+// //	hlBeginFrame();
+// //	HLboolean inkwell_state;
+// //	hlGetBooleanv(HL_INKWELL_STATE, &inkwell_state);
+// //	ROS_INFO("inkwell active %d",inkwell_state );
+// //	hlEndFrame();
+// //	return 0;
+// 	////////////////////////////////////////////////////////////////
+// 	// Init ROS
+// 	////////////////////////////////////////////////////////////////
+
+// 	//PhantomROS omni_ros;
+// 	//omni_ros.init(&state);
+// 	hdScheduleAsynchronous(omni_state_callback, &state,
+// 			HD_MAX_SCHEDULER_PRIORITY);
+    
+//     ROS_INFO("Ending Session....");
+// 	hdStopScheduler();
+// 	hdDisableDevice(hHD);
+// }
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "pick_place_demo");
@@ -767,7 +878,7 @@ int main(int argc, char **argv)
 	}
 
 	ROS_INFO("Found %s.", hdGetString(HD_DEVICE_MODEL_TYPE));
-	hdEnable(HD_FORCE_OUTPUT);
+	//hdEnable(HD_FORCE_OUTPUT);//加力
 	hdStartScheduler();
 	if (HD_DEVICE_ERROR(error = hdGetError())) {
 		ROS_ERROR("Failed to start the scheduler"); //, &error);
@@ -800,10 +911,9 @@ int main(int argc, char **argv)
 	// pthread_create(&publish_thread, NULL, ros_publish, (void*) &omni_ros);
 	// pthread_join(publish_thread, NULL);
 
-
-    kinova::PickPlace pick_place(node,&state);
     ros::AsyncSpinner spinner(1);
     spinner.start();
+    kinova::PickPlace pick_place(node,&state);
     while (ros::ok()) {
 		pick_place.my_pick();
         ros::spinOnce();
