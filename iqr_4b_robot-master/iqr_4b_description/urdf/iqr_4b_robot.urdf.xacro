@@ -51,6 +51,6 @@
 	  </plugin>
 	</gazebo>
   <!-- Kinova jaco j2n6s300 -->
-  <xacro:j2n6s300  base_parent="arm_mount_link"/>
+  <xacro:j2n6s300  base_parent="root"/>
 
 </robot>

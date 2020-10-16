@@ -69,7 +69,7 @@
   <group if="$(arg use_trajectory_controller)">
     <!-- Effort Joint trajectory controller-->
     <node name="$(arg kinova_robotName)_trajectory_controller" pkg="controller_manager" type="spawner"
-      output="screen"
+      output="screen" 
       args="effort_joint_trajectory_controller
       effort_finger_trajectory_controller
       finger_tip_1_position_controller
@@ -77,11 +77,10 @@
       finger_tip_3_position_controller
       joint_state_controller"/>
   </group>
-
-
-  <node name="command_robot_home_pose" pkg="kinova_control" type="move_robot.py"
+      <!--机械臂复位-->
+    <node name="command_robot_home_pose" pkg="kinova_control" type="zhike_move_robot.py"
         respawn="false" output="screen" args="$(arg kinova_robotType)">
-  </node>
+    </node>
 <!-- create web socket api -->
   <node name="file_server" pkg="file_server" type="file_server" output="screen" />
   <param name="robot/name" value="zhike" />
@@ -104,4 +103,6 @@
         -J $(arg kinova_robotType)_joint_finger_1 1.0
         -J $(arg kinova_robotType)_joint_finger_2 1.0
         -J $(arg kinova_robotType)_joint_finger_3 1.0" />
+
+
 </launch>
