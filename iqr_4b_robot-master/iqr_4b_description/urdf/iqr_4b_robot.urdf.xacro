@@ -50,7 +50,7 @@
 	    <rpyOffsets>0 0 0</rpyOffsets>
 	  </plugin>
 	</gazebo>
-  <!-- Kinova jaco j2n6s300 -->
-  <xacro:j2n6s300  base_parent="root"/>
+  <!-- Kinova jaco j2n6s300 >
+  <xacro:j2n6s300  base_parent="root"/-->
 
 </robot>

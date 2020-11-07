@@ -651,7 +651,7 @@ void PickPlace::evaluate_plan(moveit::planning_interface::MoveGroupInterface &gr
         {
             count++;
             plan_time = 20+count*10;
-            ROS_INFO("Setting plan time to %f sec", plan_time);
+            ROS_INFO("evaluate_plan:Setting plan time to %f sec", plan_time);
             group.setPlanningTime(plan_time);
             result_ = (group.plan(my_plan) == moveit_msgs::MoveItErrorCodes::SUCCESS);
             std::cout << "at attemp: " << count << std::endl;
@@ -712,7 +712,7 @@ void PickPlace::auto_evaluate_plan(moveit::planning_interface::MoveGroupInterfac
         {
             count++;
             plan_time = 20+count*10;
-            ROS_INFO("Setting plan time to %f sec", plan_time);
+            ROS_INFO("auto_evaluate_plan:Setting plan time to %f sec", plan_time);
             group.setPlanningTime(plan_time);
             result_ = (group.plan(my_plan) == moveit_msgs::MoveItErrorCodes::SUCCESS);
             std::cout << "at attemp: " << count << std::endl;
@@ -751,10 +751,10 @@ bool PickPlace::my_pick()
     start_joint_[4] = -state->thetas[5] +M_PI/4;
     start_joint_[5] = -(-state->thetas[6] - M_PI);
     group_->setJointValueTarget(start_joint_);
+    ROS_INFO("%f %f %f %f %f %f",start_joint_[0],start_joint_[1],start_joint_[2],start_joint_[3],start_joint_[4],start_joint_[5]);
     auto_evaluate_plan(*group_);
 
-    ROS_INFO("%f %f %f %f %f %f",start_joint_[0],start_joint_[1],start_joint_[2],start_joint_[3],start_joint_[4],start_joint_[5]);
-
+    
     if (state->buttons[0] == 1)
 	{
         ros::WallDuration(1.0).sleep();
