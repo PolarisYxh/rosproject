@@ -751,12 +751,13 @@ bool PickPlace::my_pick()
     start_joint_[4] = -state->thetas[5] +M_PI/4;
     start_joint_[5] = -(-state->thetas[6] - M_PI);
     group_->setJointValueTarget(start_joint_);
-    ROS_INFO("%f %f %f %f %f %f",start_joint_[0],start_joint_[1],start_joint_[2],start_joint_[3],start_joint_[4],start_joint_[5]);
+    //ROS_INFO("%f %f %f %f %f %f",start_joint_[0],start_joint_[1],start_joint_[2],start_joint_[3],start_joint_[4],start_joint_[5]);
     auto_evaluate_plan(*group_);
 
     
     if (state->buttons[0] == 1)
 	{
+        ROS_INFO_STREAM("press 1");
         ros::WallDuration(1.0).sleep();
         gripper_action(0.75*FINGER_MAX);
         ROS_INFO_STREAM("OK ...");
