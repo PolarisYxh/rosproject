@@ -86,7 +86,7 @@
   <param name="robot/name" value="zhike" />
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" >
      <arg name="port" value="9091"/>
-	<arg name="address" value="192.168.3.2"/>
+	<arg name="address" value="127.0.0.1"/>
   </include>
   <node name="joy_to_twist" pkg="gazebo_simulation_scene" type="joy_to_twist.py" output="screen"/>
 

@@ -8,17 +8,18 @@ find_package(PCL REQUIRED COMPONENTS common io visualization)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-	
+
 	roscpp
 	rospy
 	std_msgs
-	rostime sensor_msgs 
-	message_filters 
+	rostime sensor_msgs
+	message_filters
 	cv_bridge
-	image_transport 
-	compressed_image_transport 
-	compressed_depth_image_transport 
+	image_transport
+	compressed_image_transport
+	compressed_depth_image_transport
 	visualization_msgs
+	color_depth_msg
 )
 
 
@@ -61,7 +62,6 @@ find_package(catkin REQUIRED COMPONENTS
 #   Message1.msg
 #   Message2.msg
 # )
-
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
@@ -133,26 +133,30 @@ include_directories(
 )
 
 add_executable(save_rgbd_from_kinect2 src/save_rgbd_from_kinect2.cpp)
-add_executable(save_rgbd_from_kinect2_new src/save_rgbd_from_kinect2_new.cpp)
 target_link_libraries(save_rgbd_from_kinect2
 	${catkin_LIBRARIES}
 	${OpenCV_LIBRARIES}
 	${PCL_LIBRARY}
 	${kinect2_bridge_LIBRARIES}
-${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES} 
+${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES}
 ${PCL_VISUALIZATION_LIBRARIES}
-
 /usr/lib/x86_64-linux-gnu/libX11.so#opencv多线程
 pthread#opencv多线程
 )
+
+add_executable(transfer_rgbd_both src/transfer_rgbd_both.cpp)
+target_link_libraries(transfer_rgbd_both
+						${catkin_LIBRARIES}
+						${OpenCV_LIBRARIES})
+
+add_executable(save_rgbd_from_kinect2_new src/save_rgbd_from_kinect2_new.cpp)
 target_link_libraries(save_rgbd_from_kinect2_new
 	${catkin_LIBRARIES}
 	${OpenCV_LIBRARIES}
 	${PCL_LIBRARY}
 	${kinect2_bridge_LIBRARIES}
-${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES} 
+${PCL_COMMON_LIBRARIES} ${PCL_IO_LIBRARIES}
 ${PCL_VISUALIZATION_LIBRARIES}
-
 )
 ## Declare a C++ library
 # add_library(save_rgbd_from_kinect2
@@ -191,12 +195,12 @@ ${PCL_VISUALIZATION_LIBRARIES}
 # )
 
 ## Mark executables and/or libraries for installation
- install(TARGETS save_rgbd_from_kinect2 
+ install(TARGETS save_rgbd_from_kinect2
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
- install(TARGETS save_rgbd_from_kinect2_new 
+ install(TARGETS save_rgbd_from_kinect2_new
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

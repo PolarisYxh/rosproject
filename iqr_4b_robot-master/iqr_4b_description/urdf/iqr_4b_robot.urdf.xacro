@@ -10,7 +10,7 @@
   <xacro:include filename="$(find ${package_name})/urdf/zed.xacro"/>
   <xacro:include filename="$(find ${package_name})/urdf/vlp16.xacro"/>
   <xacro:include filename="$(find ${package_name})/urdf/kinect_v2.xacro"/>
-  <xacro:include filename="$(find kinova_description)/urdf/j2n6s300.xacro"/>
+  <!--xacro:include filename="$(find kinova_description)/urdf/j2n6s300.xacro"/-->
   <xacro:include filename="$(find ${package_name})/urdf/jackal_support.xacro"/>
   <xacro:include filename="$(find pan_tilt_description)/urdf/pan_tilt.urdf.xacro" />
 

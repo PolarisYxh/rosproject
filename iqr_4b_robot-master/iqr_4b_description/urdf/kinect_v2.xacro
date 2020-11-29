@@ -29,6 +29,7 @@
     </joint>
 
     <gazebo reference="${prefix}_link">
+    <plugin name="model_push" filename="libmodel_push.so"/>
     <material>Gazebo/FlatBlack</material>
     <sensor type="depth" name="camera">
         <always_on>true</always_on>
