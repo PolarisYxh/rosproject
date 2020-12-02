@@ -5,10 +5,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="asm_car_asm">
 	  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
 
-  <!-- ur5 -->
-  <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" />
+  <!-- ur5 >
+  <xacro:include filename="$(find ur_description)/urdf/ur5.urdf.xacro" /-->
 
-  <!-- arm -->
+  <!-- arm >
   <xacro:ur5_robot prefix="ur5_" joint_limited="true"
     shoulder_pan_lower_limit="${-pi}" shoulder_pan_upper_limit="${pi}"
     shoulder_lift_lower_limit="${-pi}" shoulder_lift_upper_limit="${pi}"
@@ -17,13 +17,14 @@
     wrist_2_lower_limit="${-pi}" wrist_2_upper_limit="${pi}"
     wrist_3_lower_limit="${-pi}" wrist_3_upper_limit="${pi}"
     transmission_hw_interface="$(arg transmission_hw_interface)"
-  />
+  /-->
 
   <include filename="$(find asm_car_asm)/urdf/asm_car_asm.urdf"/>
 <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-    <robotNamespace>/</robotNamespace>
-    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    <!--robotNamespace>/</robotNamespace>
+    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
+    <legacyModeNS>true</legacyModeNS>
   </plugin>
 </gazebo>
 <gazebo reference="body">
@@ -338,7 +339,7 @@
   </gazebo>
 
   <!-- stereo camera -->
-    <gazebo reference="camera_link">
+    <gazebo reference="kinect_link">
       <sensor type="multicamera" name="stereocamera">
         <always_on>true</always_on>
         <update_rate>20</update_rate>
