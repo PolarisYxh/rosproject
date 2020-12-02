@@ -1,4 +1,5 @@
 # my ros Jackal's  package
+sudo apt install ros--control* ros--gazebo-ros*
 before roslaunch iqr_4b_bringup iqr_bringup.launch,have to open all the devices such as kinova
 roslaunch iqr_4b_moveit_config iqr_4b_moveit_execute.launch//manipulate kinova arm
 rosrun kinova_demo fingers_action_client.py j2n6s300 percent -- 100 100 100   //动指头的，最后三个数<0,100>之间

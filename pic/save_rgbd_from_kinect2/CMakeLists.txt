@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(save_rgbd_from_kinect2)
-
+add_compile_options(-std=c++11)
 find_package(OpenCV REQUIRED)
 find_package(OpenMP)
 find_package(PCL REQUIRED COMPONENTS common io visualization)
@@ -148,7 +148,7 @@ add_executable(transfer_rgbd_both src/transfer_rgbd_both.cpp)
 target_link_libraries(transfer_rgbd_both
 						${catkin_LIBRARIES}
 						${OpenCV_LIBRARIES})
-
+add_dependencies(transfer_rgbd_both ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}   color_depth_msg_gencpp)
 add_executable(save_rgbd_from_kinect2_new src/save_rgbd_from_kinect2_new.cpp)
 target_link_libraries(save_rgbd_from_kinect2_new
 	${catkin_LIBRARIES}
@@ -166,7 +166,7 @@ ${PCL_VISUALIZATION_LIBRARIES}
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
-# add_dependencies(save_rgbd_from_kinect2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#add_dependencies(save_rgbd_from_kinect2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}   color_depth_msg_gencpp)
 
 ## Declare a C++ executable
 # add_executable(save_rgbd_from_kinect2_node src/save_rgbd_from_kinect2_node.cpp)

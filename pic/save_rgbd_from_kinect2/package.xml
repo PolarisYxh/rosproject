@@ -53,7 +53,7 @@
   <!--<build_depend>kinect2_bridge</build_depend>-->
   <build_depend>libpcl-all-dev</build_depend>
   <build_depend>cv_bridge</build_depend><!-- Depend on cv_bridge instead of libopencv-dev to support ROS Hydro.-->
-
+  <build_depend>color_depth_msg</build_depend>
   <run_depend>pcl</run_depend>
   <run_depend>message_runtime</run_depend>
   <run_depend>roscpp</run_depend>
@@ -69,7 +69,7 @@
   <run_depend>libpcl-all</run_depend>
   <!--<run_depend>kinect2_bridge</run_depend>-->
   <run_depend>cv_bridge</run_depend><!-- Depend on cv_bridge instead of libopencv-dev to support ROS Hydro.-->
-
+  <run_depend>color_depth_msg</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
